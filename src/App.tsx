@@ -32,6 +32,11 @@ function App() {
       inputRef.current.value = ''
     }
   }
+  function handleDeleteItem(index: number) {
+    setItems((prevItems) => {
+      return prevItems.filter((item) => item.index !== index)
+    })
+  }
 
   return (
     <>
@@ -52,13 +57,22 @@ function App() {
         <form onSubmit={onSubmit}>
           <h3>Novo Item: </h3>
           <input className={styles.inputItem} ref={inputRef} type="text" />
-          <button type="submit">Adicionar</button>
+          <button className={styles.addBtn} type="submit">
+            Adicionar
+          </button>
         </form>
         <div className={styles.items}>
           <h3>Items:</h3>
           {filteredItems.map(({ item, index }) => (
             <div className={styles.item} key={index}>
               {item}
+
+              <button
+                className={styles.deleteButton}
+                onClick={() => handleDeleteItem(index || 0)}
+              >
+                X
+              </button>
             </div>
           ))}
         </div>
