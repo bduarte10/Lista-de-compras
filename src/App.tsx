@@ -24,6 +24,7 @@ function App() {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     const value = inputRef.current?.value
+    if (!value) return
     setItems((prevItems) => {
       return [...prevItems, { item: value, index: prevItems.length }]
     })
@@ -55,7 +56,9 @@ function App() {
         <div className={styles.items}>
           <h3>Items:</h3>
           {filteredItems.map(({ item, index }) => (
-            <div key={index}>{item}</div>
+            <div className={styles.item} key={index}>
+              {item}
+            </div>
           ))}
         </div>
       </article>
