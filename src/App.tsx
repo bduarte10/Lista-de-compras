@@ -3,6 +3,7 @@ import styles from './App.module.css'
 
 interface Item {
   item: string | undefined
+  index: number | undefined
 }
 interface SearchQuery {
   searchQuery: string | undefined
@@ -23,7 +24,9 @@ function App() {
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
     const value = inputRef.current?.value
-    setItems((prev) => [...prev, { item: value }])
+    setItems((prevItems) => {
+      return [...prevItems, { item: value, index: prevItems.length }]
+    })
     if (null !== inputRef.current) {
       inputRef.current.value = ''
     }
@@ -51,8 +54,8 @@ function App() {
         </form>
         <div className={styles.items}>
           <h3>Items:</h3>
-          {filteredItems.map(({ item }) => (
-            <div key={item}>{item}</div>
+          {filteredItems.map(({ item, index }) => (
+            <div key={index}>{item}</div>
           ))}
         </div>
       </article>
