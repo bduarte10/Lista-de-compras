@@ -1,4 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
+import styles from './App.module.css'
 
 interface Item {
   item: string | undefined
@@ -30,22 +31,31 @@ function App() {
 
   return (
     <>
-      Search
-      <input
-        value={query.searchQuery}
-        onChange={(e) => setQuery({ searchQuery: e.target.value })}
-        type="search"
-      />
-      <br />
-      <br />
-      <form onSubmit={onSubmit}>
-        New Item: <input ref={inputRef} type="text" />
-        <button type="submit">Add</button>
-      </form>
-      <h3>Items:</h3>
-      {filteredItems.map(({ item }) => (
-        <div key={item}>{item}</div>
-      ))}
+      <article className={styles.card}>
+        <div className={styles.searchContainer}>
+          <h3>Buscar:</h3>
+          <input
+            id="search"
+            className={styles.searchBar}
+            value={query.searchQuery}
+            onChange={(e) => setQuery({ searchQuery: e.target.value })}
+            type="search"
+          />
+        </div>
+        <br />
+        <br />
+        <form onSubmit={onSubmit}>
+          <h3>Novo Item: </h3>
+          <input className={styles.inputItem} ref={inputRef} type="text" />
+          <button type="submit">Adicionar</button>
+        </form>
+        <div className={styles.items}>
+          <h3>Items:</h3>
+          {filteredItems.map(({ item }) => (
+            <div key={item}>{item}</div>
+          ))}
+        </div>
+      </article>
     </>
   )
 }
