@@ -1,14 +1,23 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 interface Item {
   item: string | undefined
 }
 interface SearchQuery {
-  value: string
+  searchQuery: string | undefined
 }
 function App() {
   const [items, setItems] = useState<Item[]>([])
+  const [query, setQuery] = useState<SearchQuery>({ searchQuery: '' })
   const inputRef = useRef<HTMLInputElement | null>(null)
+
+  const filteredItems = useMemo(() => {
+    return items.filter((item) => {
+      return item.item
+        ?.toLowerCase()
+        .includes(query.searchQuery?.toLowerCase() || '')
+    })
+  }, [items, query])
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -23,8 +32,8 @@ function App() {
     <>
       Search
       <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        value={query.searchQuery}
+        onChange={(e) => setQuery({ searchQuery: e.target.value })}
         type="search"
       />
       <br />
@@ -34,7 +43,7 @@ function App() {
         <button type="submit">Add</button>
       </form>
       <h3>Items:</h3>
-      {items.map(({ item }) => (
+      {filteredItems.map(({ item }) => (
         <div key={item}>{item}</div>
       ))}
     </>
