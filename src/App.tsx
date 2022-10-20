@@ -36,6 +36,7 @@ function App() {
   return (
     <>
       <article className={styles.card}>
+        <h1 className={styles.title}>Lista de Compras</h1>
         <div className={styles.searchContainer}>
           <h3>Buscar:</h3>
           <input
