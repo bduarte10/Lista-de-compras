@@ -63,18 +63,21 @@ function App() {
         </form>
         <div className={styles.items}>
           <h3>Items:</h3>
-          {filteredItems.map(({ item, index }) => (
-            <div className={styles.item} key={index}>
-              {item}
 
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDeleteItem(index || 0)}
-              >
-                X
-              </button>
-            </div>
-          ))}
+          {items.length === 0 && <p>Nenhum item adicionado</p>}
+          <ul>
+            {filteredItems.map(({ item, index }) => (
+              <li className={styles.item} key={index}>
+                {item}
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => handleDeleteItem(index || 0)}
+                >
+                  X
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </article>
     </>
