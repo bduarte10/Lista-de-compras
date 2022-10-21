@@ -23,7 +23,7 @@ body {
   flex-direction: column;
   justify-content: center;
   width: 500px;
-  height: 730px;
+  height: 680px;
   align-items: center;
   background-color: #2f2f2f;
   color: #ffffff;
@@ -162,4 +162,32 @@ button:hover {
 .deleteButton:hover {
   color: #403f3f;
   background-color: transparent;
+}
+
+@media screen and (max-width: 500px) {
+  .card {
+    width: 350px;
+  }
+  .searchContainer {
+    width: 250px;
+  }
+  .searchBar {
+    width: 150px;
+  }
+  form {
+    width: 250px;
+  }
+  .inputItem {
+    width: 250px;
+  }
+  .addBtn {
+    width: 250px;
+  }
+  .items {
+    width: 250px;
+    height: 250px;
+  }
+  .item {
+    font-size: 14px;
+  }
 }
