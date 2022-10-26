@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './App.module.css'
 
 interface Item {
@@ -8,10 +8,18 @@ interface Item {
 interface SearchQuery {
   searchQuery: string | undefined
 }
+
+//save on local storage when items change
+
 function App() {
   const [items, setItems] = useState<Item[]>([])
   const [query, setQuery] = useState<SearchQuery>({ searchQuery: '' })
   const inputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    const saved = localStorage.getItem('items')
+    setItems(JSON.parse(saved || '[]'))
+  }, [])
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -25,17 +33,21 @@ function App() {
     e.preventDefault()
     const value = inputRef.current?.value
     if (!value) return
-    setItems((prevItems) => {
-      return [...prevItems, { item: value, index: prevItems.length }]
-    })
+    const newItem = {
+      item: value,
+      index: items.length,
+    }
+    setItems([...items, newItem])
+    localStorage.setItem('items', JSON.stringify([...items, newItem]))
+
     if (null !== inputRef.current) {
       inputRef.current.value = ''
     }
   }
   function handleDeleteItem(index: number) {
-    setItems((prevItems) => {
-      return prevItems.filter((item) => item.index !== index)
-    })
+    const updatedItems = items.filter((item) => item.index !== index)
+    setItems(updatedItems)
+    localStorage.setItem('items', JSON.stringify(updatedItems))
   }
 
   return (
